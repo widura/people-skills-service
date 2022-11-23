@@ -84,6 +84,7 @@ paths:
           in: path
           schema:
             type: string
+
       responses:
         '200':
           description: Successful response with the People data.

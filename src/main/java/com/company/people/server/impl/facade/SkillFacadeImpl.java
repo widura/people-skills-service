@@ -6,9 +6,11 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
-import com.company.people.server.api.exception.PersonNotFoundException;
+import com.company.people.server.api.exception.SkillNotFoundException;
+import com.company.people.server.api.exception.SkillOperationException;
 import com.company.people.server.api.facade.SkillFacade;
-import com.company.people.server.api.model.SkillEntity;
+import com.company.people.server.api.model.mongo.Skill;
+import com.company.people.server.impl.repository.PersonRepository;
 import com.company.people.server.impl.repository.SkillRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -18,37 +20,46 @@ import lombok.RequiredArgsConstructor;
 public class SkillFacadeImpl implements SkillFacade {
 
   private final SkillRepository skillRepository;
+  private final PersonRepository personRepository;
 
   @Override
-  public SkillEntity create(SkillEntity peopleEntity) {
+  public Skill create(Skill peopleEntity) {
     peopleEntity.setId(UUID.randomUUID().toString());
     return skillRepository.save(peopleEntity);
   }
 
   @Override
-  public SkillEntity update(SkillEntity peopleEntity) {
+  public Skill update(Skill peopleEntity) {
     return skillRepository.save(peopleEntity);
   }
 
   @Override
   public void delete(String id) {
-    SkillEntity skillEntity = getById(id);
+
+    Skill skillEntity = getById(id);
+
+    long skillUsageCount = personRepository.getPersonCountOfSkill(id);
+
+    if (skillUsageCount > 0) {
+      throw new SkillOperationException();
+    }
+
     skillRepository.delete(skillEntity);
   }
 
   @Override
-  public SkillEntity getById(String id) {
+  public Skill getById(String id) {
     return skillRepository
         .findById(id)
         .orElseThrow(
             () -> {
-              throw new PersonNotFoundException();
+              throw new SkillNotFoundException();
             });
   }
 
   @Override
-  public List<SkillEntity> getAllSkills() {
-    List<SkillEntity> allSkills = new ArrayList<>();
+  public List<Skill> getAllSkills() {
+    List<Skill> allSkills = new ArrayList<>();
     skillRepository.findAll().forEach(allSkills::add);
     return allSkills;
   }

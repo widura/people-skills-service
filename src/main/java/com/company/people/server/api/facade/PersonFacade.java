@@ -3,21 +3,21 @@ package com.company.people.server.api.facade;
 import java.util.List;
 import java.util.Set;
 
-import com.company.people.server.api.model.PeopleSkillEmbeddable;
-import com.company.people.server.api.model.PersonEntity;
+import com.company.people.server.api.model.mongo.Person;
+import com.company.people.server.api.model.mongo.PersonSkill;
 
 public interface PersonFacade {
-  PersonEntity create(PersonEntity peopleEntity);
+  Person create(Person peopleEntity);
 
-  Set<PeopleSkillEmbeddable> create(String id, List<PeopleSkillEmbeddable> skills);
+  Set<PersonSkill> create(String id, List<PersonSkill> skills);
 
-  Set<PeopleSkillEmbeddable> getSkills(String id);
+  Set<PersonSkill> getSkills(String id);
 
-  PersonEntity update(PersonEntity peopleEntity);
+  Person update(Person peopleEntity);
 
   void delete(String id);
 
-  PersonEntity getById(String id);
+  Person getById(String id);
 
-  List<PersonEntity> getAllPeople();
+  List<Person> getAllPeople();
 }

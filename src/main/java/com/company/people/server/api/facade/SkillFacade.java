@@ -2,16 +2,16 @@ package com.company.people.server.api.facade;
 
 import java.util.List;
 
-import com.company.people.server.api.model.SkillEntity;
+import com.company.people.server.api.model.mongo.Skill;
 
 public interface SkillFacade {
-  SkillEntity create(SkillEntity peopleEntity);
+  Skill create(Skill peopleEntity);
 
-  SkillEntity update(SkillEntity peopleEntity);
+  Skill update(Skill peopleEntity);
 
   void delete(String id);
 
-  SkillEntity getById(String id);
+  Skill getById(String id);
 
-  List<SkillEntity> getAllSkills();
+  List<Skill> getAllSkills();
 }

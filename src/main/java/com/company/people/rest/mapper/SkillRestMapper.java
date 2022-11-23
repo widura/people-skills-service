@@ -3,13 +3,13 @@ package com.company.people.rest.mapper;
 import org.springframework.stereotype.Component;
 
 import com.company.people.rest.model.Skill;
-import com.company.people.server.api.model.SkillEntity;
 
 @Component
-public class SkillRestMapper implements RestMapper<SkillEntity, Skill> {
+public class SkillRestMapper
+    implements RestMapper<com.company.people.server.api.model.mongo.Skill, Skill> {
 
   @Override
-  public Skill convertToRest(SkillEntity serverObject) {
+  public Skill convertToRest(com.company.people.server.api.model.mongo.Skill serverObject) {
     Skill skill = new Skill();
 
     skill.setId(serverObject.getId());
@@ -20,8 +20,9 @@ public class SkillRestMapper implements RestMapper<SkillEntity, Skill> {
   }
 
   @Override
-  public SkillEntity convertToServer(Skill restObject) {
-    SkillEntity entity = new SkillEntity();
+  public com.company.people.server.api.model.mongo.Skill convertToServer(Skill restObject) {
+    com.company.people.server.api.model.mongo.Skill entity =
+        new com.company.people.server.api.model.mongo.Skill();
 
     entity.setId(restObject.getId());
     entity.setName(restObject.getName());

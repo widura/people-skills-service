@@ -7,9 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import com.company.people.rest.api.PeopleApiDelegate;
 import com.company.people.rest.mapper.PersonRestMapper;
 import com.company.people.rest.mapper.PersonSkillRestMapper;
-import com.company.people.rest.api.PeopleApiDelegate;
 import com.company.people.rest.model.Person;
 import com.company.people.rest.model.PersonSkill;
 import com.company.people.server.api.facade.PersonFacade;
@@ -38,7 +38,7 @@ public class PeopleApiDelegateImpl implements PeopleApiDelegate {
   }
 
   @Override
-  public ResponseEntity<Person> getById(String id) {
+  public ResponseEntity<Person> getById(String id, String skillId, String level) {
     return ResponseEntity.ok(personRestMapper.convertToRest(personFacade.getById(id)));
   }
 
@@ -61,9 +61,7 @@ public class PeopleApiDelegateImpl implements PeopleApiDelegate {
   @Override
   public ResponseEntity<List<PersonSkill>> getPersonSkill(String id) {
     return ResponseEntity.ok(
-        personSkillRestMapper.convertToRest(
-            new ArrayList<>(
-                personFacade.getSkills(id))));
+        personSkillRestMapper.convertToRest(new ArrayList<>(personFacade.getSkills(id))));
   }
 
   @Override

@@ -14,7 +14,6 @@ import org.springframework.boot.web.server.LocalServerPort;
 
 import com.company.people.rest.model.Person;
 import com.company.people.server.api.facade.PersonFacade;
-import com.company.people.server.api.model.PersonEntity;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class PeopleRestApiIntegrationTest {
@@ -26,12 +25,12 @@ class PeopleRestApiIntegrationTest {
 
   @Test
   void greetingShouldReturnDefaultMessage() {
-    PersonEntity entity = new PersonEntity();
+    com.company.people.server.api.model.mongo.Person entity = new com.company.people.server.api.model.mongo.Person();
     entity.setId("1");
     entity.setName("name");
     entity.setSkills(Collections.emptySet());
 
-    Mockito.when(personFacadeMock.create(Mockito.any(PersonEntity.class))).thenReturn(entity);
+    Mockito.when(personFacadeMock.create(Mockito.any(com.company.people.server.api.model.mongo.Person.class))).thenReturn(entity);
 
     Person personRequest = new Person();
     personRequest.setName("name");

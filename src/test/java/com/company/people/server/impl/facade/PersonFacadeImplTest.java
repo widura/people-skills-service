@@ -9,17 +9,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.web.servlet.MockMvc;
 
 import com.company.people.server.api.exception.PersonNotFoundException;
-import com.company.people.server.api.model.PersonEntity;
-import com.company.people.server.impl.repository.PeopleRepository;
+import com.company.people.server.api.model.mongo.Person;
+import com.company.people.server.impl.repository.PersonRepository;
 
-class PeopleFacadeImplTest {
+class PersonFacadeImplTest {
 
-  @InjectMocks private PeopleFacadeImpl peopleFacadeImpl;
+  @InjectMocks private PersonFacadeImpl personFacadeImpl;
 
-  @Mock private PeopleRepository peopleRepositoryMock;
+  @Mock private PersonRepository peopleRepositoryMock;
 
   @BeforeEach
   void setUp() {
@@ -28,30 +27,30 @@ class PeopleFacadeImplTest {
 
   @Test
   void create_whenPersonEntitySuccessfullySave_thenReturnSavedPersonEntity() {
-    final PersonEntity personEntityMock = Mockito.mock(PersonEntity.class);
+    final Person personEntityMock = Mockito.mock(Person.class);
     Mockito.when(peopleRepositoryMock.save(personEntityMock))
-        .thenReturn(Mockito.mock(PersonEntity.class));
-    final PersonEntity result = peopleFacadeImpl.create(personEntityMock);
+        .thenReturn(Mockito.mock(Person.class));
+    final Person result = personFacadeImpl.create(personEntityMock);
     Assertions.assertNotNull(result);
   }
 
   @Test
   void update_whenPersonEntitySuccessfullySave_thenReturnSavedPersonEntity() {
-    final PersonEntity personEntityMock = Mockito.mock(PersonEntity.class);
+    final Person personEntityMock = Mockito.mock(Person.class);
     Mockito.when(peopleRepositoryMock.save(personEntityMock))
-        .thenReturn(Mockito.mock(PersonEntity.class));
-    final PersonEntity result = peopleFacadeImpl.update(personEntityMock);
+        .thenReturn(Mockito.mock(Person.class));
+    final Person result = personFacadeImpl.update(personEntityMock);
     Assertions.assertNotNull(result);
   }
 
   @Test
   void update_whenPersonEntityFoundForGivenId_thenReturnPersonEntity() {
     final String personId = "1";
-    PersonEntity personEntity = Mockito.mock(PersonEntity.class);
-    Optional<PersonEntity> personEntityOptional = Optional.of(personEntity);
+    Person personEntity = Mockito.mock(Person.class);
+    Optional<Person> personEntityOptional = Optional.of(personEntity);
     Mockito.when(peopleRepositoryMock.findById(personId)).thenReturn(personEntityOptional);
 
-    final PersonEntity result = peopleFacadeImpl.getById(personId);
+    final Person result = personFacadeImpl.getById(personId);
 
     Assertions.assertNotNull(result);
     Assertions.assertEquals(personEntity, result);
@@ -63,17 +62,17 @@ class PeopleFacadeImplTest {
     Mockito.when(peopleRepositoryMock.findById(personId)).thenReturn(Optional.empty());
 
     Assertions.assertThrows(
-        PersonNotFoundException.class, () -> peopleFacadeImpl.getById(personId));
+        PersonNotFoundException.class, () -> personFacadeImpl.getById(personId));
   }
 
   @Test
   void delete_whenPersonEntityFoundForGivenId_thenD() {
     final String personId = "1";
-    PersonEntity personEntity = Mockito.mock(PersonEntity.class);
-    Optional<PersonEntity> personEntityOptional = Optional.of(personEntity);
+    Person personEntity = Mockito.mock(Person.class);
+    Optional<Person> personEntityOptional = Optional.of(personEntity);
     Mockito.when(peopleRepositoryMock.findById(personId)).thenReturn(personEntityOptional);
 
-    peopleFacadeImpl.delete(personId);
+    personFacadeImpl.delete(personId);
 
     Mockito.verify(peopleRepositoryMock, Mockito.times(1)).delete(personEntity);
   }
