@@ -125,7 +125,7 @@ paths:
                 $ref: '#/components/schemas/PeopleDataServiceError'
 
   '/people/{id}/skills':
-    post:
+    patch:
       description: create people skill
       tags:
         - people
